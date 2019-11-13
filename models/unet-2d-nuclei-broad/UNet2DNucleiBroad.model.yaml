@@ -4,7 +4,7 @@ cite:
     - text: "Ronneberger, Olaf et al. U-net: Convolutional networks for biomedical image segmentation. MICCAI 2015."
       doi: https://doi.org/10.1007/978-3-319-24574-4_28
 authors:
-    - Constantin Pape;@constantinpape
+    - Constantin Pape;@bioimage-io
 documentation: ../unet2d.md
 tags: [unet2d, pytorch, nucleus-segmentation]
 
@@ -41,7 +41,7 @@ outputs:
 
 prediction:
     preprocess:
-        - spec: https://github.com/constantinpape/pytorch-resoure-stub:configurations/transformations/NormalizeZeroMeanUnitVariance.transformation.yaml:9fec4dd
+        - spec: https://github.com/bioimage-io/pytorchbioimageio:configurations/transformations/NormalizeZeroMeanUnitVariance.transformation.yaml:9fec4dd
           kwargs:
               eps: 1.0e-6  # currently all kwargs need to be specified (here or in the consumer)
               apply_to: [0]
@@ -54,23 +54,26 @@ prediction:
 training:
     setup:
         reader:
-            spec: https://github.com/constantinpape/pytorch-resoure-stub:configurations/readers/BroadNucleusData.reader.yaml:9fec4dd
+            spec: https://github.com/bioimage-io/pytorchbioimageio:configurations/readers/BroadNucleusData.reader.yaml:9fec4dd
         sampler:
-            spec: https://github.com/constantinpape/pytorch-resoure-stub:configurations/samplers/GrayscaleImageSampler.sampler.yaml:9fec4dd
+            spec: https://github.com/bioimage-io/pytorchbioimageio:configurations/samplers/GrayscaleImageSampler.sampler.yaml:9fec4dd
         preprocess:
-            - spec: https://github.com/constantinpape/pytorch-resoure-stub:configurations/transformations/NormalizeZeroMeanUnitVariance.transformation.yaml:9fec4dd
+            - spec: https://github.com/bioimage-io/pytorchbioimageio:configurations/transformations/NormalizeZeroMeanUnitVariance.transformation.yaml:9fec4dd
               kwargs: {eps: 1.0e-6, apply_to: [0]}
         loss:
-            - spec: https://github.com/constantinpape/pytorch-resoure-stub:configurations/transformations/Sigmoid.transformation.yaml:9fec4dd
+            - spec: https://github.com/bioimage-io/pytorchbioimageio:configurations/transformations/Sigmoid.transformation.yaml:9fec4dd
               kwargs: {apply_to: [0]}
-            - spec: https://github.com/constantinpape/pytorch-resoure-stub:configurations/transformations/BCELoss.transformation.yaml:9fec4dd
+            - spec: https://github.com/bioimage-io/pytorchbioimageio:configurations/transformations/BCELoss.transformation.yaml:9fec4dd
         optimizer:
             source: torch.optim.Adam
             kwargs: {lr: 0.002}
         # validation:
         #   - {}
-    source: ./train.py:train_unet2d_nuclei_broad
-    kwargs: {n_epochs: 100}
+    # The source for train can either be local, like this
+    # source: ./train.py:train_unet2d_nuclei_broad
+    # or come from some library in the dependencies, like this
+    source: torchbio.training.simple_training
+    kwargs: {n_iterations: 25}
     # enable different ways of specifying the dependencies.
     # this would hold all training dependencies, e.g. as a frozen conda environment
     # or as a pom.xml
