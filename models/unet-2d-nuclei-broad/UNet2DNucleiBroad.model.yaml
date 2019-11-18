@@ -41,10 +41,10 @@ outputs:
 
 prediction:
     preprocess:
-        - spec: https://raw.githubusercontent.com/FynnBe/pytorch-bioimage-io/pybio/specs/transformations/NormalizeZeroMeanUnitVariance.transformation.yaml
+        - spec: https://github.com/bioimage-io/pytorch-bioimage-io/blob/master/specs/transformations/NormalizeZeroMeanUnitVariance.transformation.yaml
           kwargs: {apply_to: [0]}
     weights:
-        source: doi:TODOzenodo
+        source: todo.doi
         hash: {md5: TODO}
     postprocess: null
     dependencies: conda:../environment.yaml
@@ -52,16 +52,16 @@ prediction:
 training:
     setup:
         reader:
-            spec: https://raw.githubusercontent.com/bioimage-io/python-bioimage-io/master/specs/readers/BroadNucleusData.reader.yaml
+            spec: https://github.com/bioimage-io/python-bioimage-io/blob/master/specs/readers/BroadNucleusData.reader.yaml
         sampler:
-            spec: https://raw.githubusercontent.com/FynnBe/pytorch-bioimage-io/pybio/specs/samplers/GrayscaleImageSampler.sampler.yaml
+            spec: https://github.com/bioimage-io/pytorch-bioimage-io/blob/master/specs/samplers/GrayscaleImageSampler.sampler.yaml
         preprocess:
-            - spec: https://raw.githubusercontent.com/FynnBe/pytorch-bioimage-io/pybio/specs/transformations/NormalizeZeroMeanUnitVariance.transformation.yaml
+            - spec: https://github.com/bioimage-io/pytorch-bioimage-io/blob/master/specs/transformations/NormalizeZeroMeanUnitVariance.transformation.yaml
               kwargs: {apply_to: [0]}
         loss:
-            - spec: https://raw.githubusercontent.com/FynnBe/pytorch-bioimage-io/pybio/specs/transformations/Sigmoid.transformation.yaml
+            - spec: https://github.com/bioimage-io/pytorch-bioimage-io/blob/master/specs/transformations/Sigmoid.transformation.yaml
               kwargs: {apply_to: [0]}
-            - spec: https://raw.githubusercontent.com/FynnBe/pytorch-bioimage-io/pybio/specs/transformations/BCELoss.transformation.yaml
+            - spec: https://github.com/bioimage-io/pytorch-bioimage-io/blob/master/specs/transformations/BCELoss.transformation.yaml
         optimizer:
             source: torch.optim.Adam
             optional_kwargs: {lr: 0.002}
