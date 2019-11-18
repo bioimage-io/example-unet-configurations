@@ -13,7 +13,7 @@ language: python
 framework: pytorch
 
 source: torchbio.models.unet.UNet2d
-default_kwargs: {input_channels: 1, output_channels: 1}
+optional_kwargs: {input_channels: 1, output_channels: 1}
 
 test_input: ../test_input.npy
 test_output: ../test_output.npy
@@ -64,14 +64,14 @@ training:
             - spec: https://raw.githubusercontent.com/FynnBe/pytorch-bioimage-io/pybio/specs/transformations/BCELoss.transformation.yaml
         optimizer:
             source: torch.optim.Adam
-            default_kwargs: {lr: 0.002}
+            optional_kwargs: {lr: 0.002}
         # validation:
         #   - {}
     # The source for train can either be local, like this
     # source: ./train.py:train_unet2d_nuclei_broad
     # or come from some library in the dependencies, like this
     source: torchbio.training.simple_training
-    default_kwargs: {n_iterations: 25}
+    optional_kwargs: {n_iterations: 25}
     # enable different ways of specifying the dependencies.
     # this would hold all training dependencies, e.g. as a frozen conda environment
     # or as a pom.xml
