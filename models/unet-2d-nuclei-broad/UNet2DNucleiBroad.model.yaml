@@ -4,8 +4,8 @@ cite:
     - text: "Ronneberger, Olaf et al. U-net: Convolutional networks for biomedical image segmentation. MICCAI 2015."
       doi: https://doi.org/10.1007/978-3-319-24574-4_28
 authors:
-    - Constantin Pape;@bioimage-io
-documentation: ../unet2d.md
+  - Constantin Pape;@bioimage-io
+documentation: UNet2DNucleiBroad.md
 tags: [unet2d, pytorch, nucleus-segmentation]
 
 format_version: 0.1.0
@@ -15,9 +15,9 @@ framework: pytorch
 source: torchbio.models.unet.UNet2d
 optional_kwargs: {input_channels: 1, output_channels: 1}
 
-test_input: ../test_input.npy
-test_output: ../test_output.npy
-thumbnail: ./nuclei_thumbnail.png
+test_input: null # ../test_input.npy
+test_output: null # ../test_output.npy
+thumbnail: null # ./nuclei_thumbnail.png
 
 # TODO double check inputs/outputs
 inputs:
@@ -27,7 +27,7 @@ inputs:
     data_range: [-inf, inf]
     shape:
         min: [1, 1, 32, 32]
-        step: [null, 0, 32, 32]
+        step: [0, 0, 32, 32]
 outputs:
   - name: output
     axes: bcyx
@@ -41,7 +41,7 @@ outputs:
 
 prediction:
     preprocess:
-        - spec: https://github.com/bioimage-io/pytorch-bioimage-io/blob/master/specs/transformations/NormalizeZeroMeanUnitVariance.transformation.yaml
+        - spec: https://github.com/bioimage-io/pytorch-bioimage-io/blob/ca837b91cc134004f3f61310b3f77e7d2ed8403c/specs/transformations/NormalizeZeroMeanUnitVariance.transformation.yaml
           kwargs: {apply_to: [0]}
     weights:
         source: todo.doi
@@ -52,16 +52,16 @@ prediction:
 training:
     setup:
         reader:
-            spec: https://github.com/bioimage-io/python-bioimage-io/blob/master/specs/readers/BroadNucleusData.reader.yaml
+            spec: https://github.com/bioimage-io/python-bioimage-io/blob/7aabbd364f97f3141cc7289c7de07cd74a36aa97/specs/readers/BroadNucleusData.reader.yaml
         sampler:
-            spec: https://github.com/bioimage-io/pytorch-bioimage-io/blob/master/specs/samplers/GrayscaleImageSampler.sampler.yaml
+            spec: https://github.com/bioimage-io/pytorch-bioimage-io/blob/ca837b91cc134004f3f61310b3f77e7d2ed8403c/specs/samplers/GrayscaleImageSampler.sampler.yaml
         preprocess:
-            - spec: https://github.com/bioimage-io/pytorch-bioimage-io/blob/master/specs/transformations/NormalizeZeroMeanUnitVariance.transformation.yaml
+            - spec: https://github.com/bioimage-io/pytorch-bioimage-io/blob/ca837b91cc134004f3f61310b3f77e7d2ed8403c/specs/transformations/NormalizeZeroMeanUnitVariance.transformation.yaml
               kwargs: {apply_to: [0]}
         loss:
-            - spec: https://github.com/bioimage-io/pytorch-bioimage-io/blob/master/specs/transformations/Sigmoid.transformation.yaml
+            - spec: https://github.com/bioimage-io/pytorch-bioimage-io/blob/ca837b91cc134004f3f61310b3f77e7d2ed8403c/specs/transformations/Sigmoid.transformation.yaml
               kwargs: {apply_to: [0]}
-            - spec: https://github.com/bioimage-io/pytorch-bioimage-io/blob/master/specs/transformations/BCELoss.transformation.yaml
+            - spec: https://github.com/bioimage-io/pytorch-bioimage-io/blob/ca837b91cc134004f3f61310b3f77e7d2ed8403c/specs/transformations/BCELoss.transformation.yaml
         optimizer:
             source: torch.optim.Adam
             optional_kwargs: {lr: 0.002}
