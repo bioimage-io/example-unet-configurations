@@ -67,9 +67,7 @@ training:
             optional_kwargs: {lr: 0.002}
         # validation:
         #   - {}
-    # The source for train can either be local, like this
-    # source: ./train.py:train_unet2d_nuclei_broad
-    # or come from some library in the dependencies, like this
+
     source: torchbio.training.simple_training
     optional_kwargs: {n_iterations: 25}
     # enable different ways of specifying the dependencies.
